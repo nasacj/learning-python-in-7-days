@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/learning-python-in-7-days/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/learning-python-in-7-days/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/learning-python-in-7-days/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/learning-python-in-7-days/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="为什么写这篇文章？其实早在大学我就应该开始学Python了，即便不在大学，也应该在工作后2-3年内熟练掌握Python了，我一直觉得Python是一个很好用的语言，可以面向对象，也可以面向函数；可以写出比Java和C++简单好多倍，可读性好上好多倍的代码。而且它拥有着非常丰富的库例如NumPy来处理数据，分析数据。那么好为什么不学？为什么不用？对！这是个好问题。作为一个从嵌入式C++程序员，到互联">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7天掌握Python编程（程序员篇）第0天">
+<meta property="og:url" content="http://nasacj.github.io/learning-python-in-7-days/2019/05/09/day-0/index.html">
+<meta property="og:site_name" content="learning-python-in-7-days">
+<meta property="og:description" content="为什么写这篇文章？其实早在大学我就应该开始学Python了，即便不在大学，也应该在工作后2-3年内熟练掌握Python了，我一直觉得Python是一个很好用的语言，可以面向对象，也可以面向函数；可以写出比Java和C++简单好多倍，可读性好上好多倍的代码。而且它拥有着非常丰富的库例如NumPy来处理数据，分析数据。那么好为什么不学？为什么不用？对！这是个好问题。作为一个从嵌入式C++程序员，到互联">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://upload.wikimedia.org/wikipedia/commons/d/d0/Guido-portrait-2014-curvves.jpg">
+<meta property="og:updated_time" content="2019-05-09T08:02:54.105Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="7天掌握Python编程（程序员篇）第0天">
+<meta name="twitter:description" content="为什么写这篇文章？其实早在大学我就应该开始学Python了，即便不在大学，也应该在工作后2-3年内熟练掌握Python了，我一直觉得Python是一个很好用的语言，可以面向对象，也可以面向函数；可以写出比Java和C++简单好多倍，可读性好上好多倍的代码。而且它拥有着非常丰富的库例如NumPy来处理数据，分析数据。那么好为什么不学？为什么不用？对！这是个好问题。作为一个从嵌入式C++程序员，到互联">
+<meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/commons/d/d0/Guido-portrait-2014-curvves.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/learning-python-in-7-days/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://nasacj.github.io/learning-python-in-7-days/2019/05/09/day-0/">
+
+
+
+
+
+  <title>7天掌握Python编程（程序员篇）第0天 | learning-python-in-7-days</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c9c5a4fabb57b60c27385b3921e219c4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/learning-python-in-7-days/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">learning-python-in-7-days</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/learning-python-in-7-days/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/learning-python-in-7-days/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/learning-python-in-7-days/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://nasacj.github.io/learning-python-in-7-days/learning-python-in-7-days/2019/05/09/day-0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="nasacj">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/learning-python-in-7-days/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="learning-python-in-7-days">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">7天掌握Python编程（程序员篇）第0天</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-09T14:10:35+08:00">
+                2019-05-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="为什么写这篇文章？"><a href="#为什么写这篇文章？" class="headerlink" title="为什么写这篇文章？"></a>为什么写这篇文章？</h1><p>其实早在大学我就应该开始学Python了，即便不在大学，也应该在工作后2-3年内熟练掌握Python了，我一直觉得Python是一个很好用的语言，可以面向对象，也可以面向函数；可以写出比Java和C++简单好多倍，可读性好上好多倍的代码。而且它拥有着非常丰富的库例如NumPy来处理数据，分析数据。<br><br>那么好为什么不学？为什么不用？对！这是个好问题。作为一个从嵌入式C++程序员，到互联网电商的C++程序员，又再到视频行业大数据开发Java程序员，我都没什么机会用到Python，而且大部分处理工作上的问题都是在纠结业务，平时的C++和Java已经是够用，虽然语言上并不是问题，影响个人选择一门编程语言主要还是因为工作（当然大学或者初学者的第一门语言主要是自己感兴趣，或者有人带，又或者被课程逼的：比如C语言）。我觉得选择一门平时不用的编程语言主要是因为自己的兴趣，又或是逼着自己去成长。<br><br>我觉得我这次想写下这些Python学习笔记，主要是因为逼自己吧，但也不乏兴趣。如果是没有兴趣，我肯定不会选择花时间去折腾。至少Python还有很多好玩的东东，它就像一扇窗户，可以打开通往数据分析，图像处理，网络编程，爬虫各种各样的世界的窗户。<br>写下这些笔记也是自己逼自己的一种方式，为什么说是逼？因为说好要去做一件事件，到后面很容易半途而废（这是原来的我），而且有时候，很多看过的东西也很容易忘记，所以好记性不如烂笔头。写下这些笔记一方面可以作为参考，另一方面则是一种对于学习的实实在在的落地，因为将自己在学习过程中遇到的疑问和过程记录下来，而不是随意翻一本书或者网上随便搜搜一样的心态来学习。这样实实在在地将一些点记录下来，我也希望能同样帮助到别人。<br><br>作为一个C++和Java程序员，又或是静态语言习惯用户，对于动态语言Python的学习，我的一些出发点是尝试带着多年的C++和Java处理问题的经验和思考方式来叩开Python这扇窗，我想可能带着原有的“老思维”方式或许会对学习新知识有些“阻碍”，但我觉得在计算机处理问题上的方法，对于效率的提高以及算法的实现都是一致的，因此我的原有的经验不会是一种阻碍，而是更快地将思考的问题抛出，直截了当地去看看Python是如何处理我原来处理过的问题的。<br><br>因此我会从以下一些方面来探索Python：<br></p>
+<ul>
+<li>基本类型，语法和语法糖</li>
+<li>Python的面向对象（继承，重载）和面向函数</li>
+<li>基本数据结构以及一些性能上的坑，用Python来实现一些算法题</li>
+<li>Python的多线程编程</li>
+<li>Python的网络编程</li>
+<li>一些我以前我不知道我不知道的一些Python特性</li>
+<li>一些Python库的了解</li>
+</ul>
+<p>我尝试从《Python核心编程（第二版）》这本书入手，听说这本是一本不错的入门书，我尝试着看了一张，发现可读性很好，读起来很开，所以我尝试着看看是否自己能在7天内来掌握我上面抛出的一些Python课题。因此要在7天内读完正本书的同时还需要查阅其他各种各样关于Python的资料。<br>还有参考：<a href="https://www.runoob.com/python3/python3-tutorial.html" target="_blank" rel="noopener">Python3教程</a><br><br>祝我好运吧。<br></p>
+<h1 id="Python起源简介："><a href="#Python起源简介：" class="headerlink" title="Python起源简介："></a>Python起源简介：</h1><p><a href="https://en.wikipedia.org/wiki/Python_(programming_language" target="_blank" rel="noopener">Wiki的介绍</a><br><br><br>Python之父：Guido van Rossum<br></p>
+<p><img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/Guido-portrait-2014-curvves.jpg" alt="Rossum"></p>
+<p>我记得有个笑话，当年Rossum去Google面试，简历上写了一句“I wrote Python”，结果也没人鸟他，直到面试到最后的高管才发现他是Python之父<br><br>至于Python的开发环境搭建，我在此不做赘述<br></p>
+<h2 id="学习文档参考"><a href="#学习文档参考" class="headerlink" title="学习文档参考"></a>学习文档参考</h2><p>Python官网上的有着数不胜数的文档，有视频，有网页，有书本，针对有编程经验的和无编程经验的都有：<br><br><a href="https://wiki.python.org/moin/BeginnersGuide" target="_blank" rel="noopener">https://wiki.python.org/moin/BeginnersGuide</a><br><br><br></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/learning-python-in-7-days/2019/05/09/day-1-3/" rel="prev" title="7天掌握Python编程（程序员篇）第1-3天">
+                7天掌握Python编程（程序员篇）第1-3天 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/learning-python-in-7-days/images/avatar.gif" alt="nasacj">
+          <p class="site-author-name" itemprop="name">nasacj</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/learning-python-in-7-days/archives/">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">posts</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么写这篇文章？"><span class="nav-number">1.</span> <span class="nav-text">为什么写这篇文章？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Python起源简介："><span class="nav-number">2.</span> <span class="nav-text">Python起源简介：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#学习文档参考"><span class="nav-number">2.1.</span> <span class="nav-text">学习文档参考</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">nasacj</span>
+</div>
+
+
+<div class="powered-by">
+  Powered by <a class="theme-link" href="https://hexo.io">Hexo</a>
+</div>
+
+<div class="theme-info">
+  Theme -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/learning-python-in-7-days/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/learning-python-in-7-days/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/learning-python-in-7-days/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/learning-python-in-7-days/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/learning-python-in-7-days/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/learning-python-in-7-days/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/learning-python-in-7-days/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/learning-python-in-7-days/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/learning-python-in-7-days/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/learning-python-in-7-days/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/learning-python-in-7-days/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
