@@ -102,7 +102,7 @@
 <meta property="og:site_name" content="learning-python-in-7-days">
 <meta property="og:description" content="Socket编程Python 提供了两个级别访问的网络服务。：  低级别的网络服务支持基本的 Socket，它提供了标准的 BSD Sockets API，可以访问底层操作系统Socket接口的全部方法。 高级别的网络服务模块 SocketServer， 它提供了服务器中心类，可以简化网络服务器的开发。  什么是 Socket?Socket又称”套接字”，应用程序通常通过”套接字”向网络发出请求或">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-05-21T15:36:04.436Z">
+<meta property="og:updated_time" content="2019-05-21T15:46:09.414Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="7天掌握Python编程（程序员篇）第6天 - 网络编程">
 <meta name="twitter:description" content="Socket编程Python 提供了两个级别访问的网络服务。：  低级别的网络服务支持基本的 Socket，它提供了标准的 BSD Sockets API，可以访问底层操作系统Socket接口的全部方法。 高级别的网络服务模块 SocketServer， 它提供了服务器中心类，可以简化网络服务器的开发。  什么是 Socket?Socket又称”套接字”，应用程序通常通过”套接字”向网络发出请求或">
@@ -468,6 +468,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> python3 server.py</span><br></pre></td></tr></table></figure>
 <p>第二个终端执行 client.py 文件：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> python3 client.py </span><br><span class="line">欢迎访问Python教程！</span><br></pre></td></tr></table></figure>
+<hr>
 <h1 id="I-O多路复用"><a href="#I-O多路复用" class="headerlink" title="I/O多路复用"></a>I/O多路复用</h1><h2 id="select"><a href="#select" class="headerlink" title="select"></a>select</h2><p>Python的select()方法直接调用操作系统的IO接口，它监控sockets,open files, and pipes(所有带fileno()方法的文件句柄)何时变成readable 和writeable, 或者通信错误，select()使得同时监控多个连接变的简单，并且这比写一个长循环来等待和监控多客户端连接要高效，因为select直接通过操作系统提供的C的网络接口进行操作，而不是通过Python的解释器。</p>
 <p>select目前几乎在所有的平台上支持，其良好跨平台支持也是它的一个优点。select的一 个缺点在于单个进程能够监视的文件描述符的数量存在最大限制，在Linux上一般为1024，可以通过修改宏定义甚至重新编译内核的方式提升这一限制，但是这样会造成效率的降低</p>
 <h3 id="select语法"><a href="#select语法" class="headerlink" title="select语法"></a>select语法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select(rlist, wlist, xlist, timeout=<span class="literal">None</span>)</span><br></pre></td></tr></table></figure>
