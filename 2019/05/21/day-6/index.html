@@ -465,9 +465,9 @@
 <p>完整代码如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="comment"># 文件名：client.py</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 导入 socket、sys 模块</span></span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 socket 对象</span></span><br><span class="line">s = socket.socket(socket.AF_INET, socket.SOCK_STREAM) </span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取本地主机名</span></span><br><span class="line">host = socket.gethostname() </span><br><span class="line"></span><br><span class="line"><span class="comment"># 设置端口号</span></span><br><span class="line">port = <span class="number">9999</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 连接服务，指定主机和端口</span></span><br><span class="line">s.connect((host, port))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接收小于 1024 字节的数据</span></span><br><span class="line">msg = s.recv(<span class="number">1024</span>)</span><br><span class="line"></span><br><span class="line">s.close()</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> (msg.decode(<span class="string">'utf-8'</span>))</span><br></pre></td></tr></table></figure>
 <p>现在我们打开两个终端，第一个终端执行 server.py 文件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> python3 server.py</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> python3 server.py</span></span><br></pre></td></tr></table></figure>
 <p>第二个终端执行 client.py 文件：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span> python3 client.py </span><br><span class="line">欢迎访问Python教程！</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> python3 client.py </span></span><br><span class="line">欢迎访问Python教程！</span><br></pre></td></tr></table></figure>
 <hr>
 <h1 id="I-O多路复用"><a href="#I-O多路复用" class="headerlink" title="I/O多路复用"></a>I/O多路复用</h1><h2 id="select"><a href="#select" class="headerlink" title="select"></a>select</h2><p>Python的select()方法直接调用操作系统的IO接口，它监控sockets,open files, and pipes(所有带fileno()方法的文件句柄)何时变成readable 和writeable, 或者通信错误，select()使得同时监控多个连接变的简单，并且这比写一个长循环来等待和监控多客户端连接要高效，因为select直接通过操作系统提供的C的网络接口进行操作，而不是通过Python的解释器。</p>
 <p>select目前几乎在所有的平台上支持，其良好跨平台支持也是它的一个优点。select的一 个缺点在于单个进程能够监视的文件描述符的数量存在最大限制，在Linux上一般为1024，可以通过修改宏定义甚至重新编译内核的方式提升这一限制，但是这样会造成效率的降低</p>
@@ -633,6 +633,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/learning-python-in-7-days/2019/05/22/day-7/" rel="prev" title="7天掌握Python编程（程序员篇）第7天 - 多线程编程">
+                7天掌握Python编程（程序员篇）第7天 - 多线程编程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -706,7 +710,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/learning-python-in-7-days/archives/">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

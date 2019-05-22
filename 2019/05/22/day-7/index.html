@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/learning-python-in-7-days/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/learning-python-in-7-days/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/learning-python-in-7-days/css/main.css?v=5.1.2" rel="stylesheet" type="text/css">
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/learning-python-in-7-days/favicon.ico?v=5.1.2">
+
+
+
+
+
+
+<meta name="description" content="Python的thread模块已经被废弃，因此本文从threading模块开始讲起 参考资料：一文学会 Python 多线程编程 线程简介多线程能让你像运行一个独立的程序一样运行一段长代码。这有点像调用子进程（subprocess），不过区别是你调用的是一个函数或者一个类，而不是独立的程序。在我看来，举例说明更有助于解释。下面来看一个简单的例子： 123456789101112131415impo">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7天掌握Python编程（程序员篇）第7天 - 多线程编程">
+<meta property="og:url" content="http://nasacj.github.io/learning-python-in-7-days/2019/05/22/day-7/index.html">
+<meta property="og:site_name" content="learning-python-in-7-days">
+<meta property="og:description" content="Python的thread模块已经被废弃，因此本文从threading模块开始讲起 参考资料：一文学会 Python 多线程编程 线程简介多线程能让你像运行一个独立的程序一样运行一段长代码。这有点像调用子进程（subprocess），不过区别是你调用的是一个函数或者一个类，而不是独立的程序。在我看来，举例说明更有助于解释。下面来看一个简单的例子： 123456789101112131415impo">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-05-22T15:18:05.783Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="7天掌握Python编程（程序员篇）第7天 - 多线程编程">
+<meta name="twitter:description" content="Python的thread模块已经被废弃，因此本文从threading模块开始讲起 参考资料：一文学会 Python 多线程编程 线程简介多线程能让你像运行一个独立的程序一样运行一段长代码。这有点像调用子进程（subprocess），不过区别是你调用的是一个函数或者一个类，而不是独立的程序。在我看来，举例说明更有助于解释。下面来看一个简单的例子： 123456789101112131415impo">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/learning-python-in-7-days/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://nasacj.github.io/learning-python-in-7-days/2019/05/22/day-7/">
+
+
+
+
+
+  <title>7天掌握Python编程（程序员篇）第7天 - 多线程编程 | learning-python-in-7-days</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?c9c5a4fabb57b60c27385b3921e219c4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/learning-python-in-7-days/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">learning-python-in-7-days</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">7天掌握Python编程（程序员篇）</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/learning-python-in-7-days/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/learning-python-in-7-days/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/learning-python-in-7-days/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://nasacj.github.io/learning-python-in-7-days/learning-python-in-7-days/2019/05/22/day-7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="nasacj">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/learning-python-in-7-days/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="learning-python-in-7-days">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">7天掌握Python编程（程序员篇）第7天 - 多线程编程</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-05-22T12:24:12+08:00">
+                2019-05-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Python的thread模块已经被废弃，因此本文从threading模块开始讲起</p>
+<p>参考资料：<a href="http://codingpy.com/article/python-201-a-tutorial-on-threads/" target="_blank" rel="noopener">一文学会 Python 多线程编程</a></p>
+<h1 id="线程简介"><a href="#线程简介" class="headerlink" title="线程简介"></a>线程简介</h1><p>多线程能让你像运行一个独立的程序一样运行一段长代码。这有点像调用子进程（subprocess），不过区别是你调用的是一个函数或者一个类，而不是独立的程序。在我看来，举例说明更有助于解释。下面来看一个简单的例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">doubler</span><span class="params">(number)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    可以被线程使用的一个函数</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    print(threading.currentThread().getName() + <span class="string">'\n'</span>)</span><br><span class="line">    print(number * <span class="number">2</span>)</span><br><span class="line">    print()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">        my_thread = threading.Thread(target=doubler, args=(i,))</span><br><span class="line">        my_thread.start()</span><br></pre></td></tr></table></figure>
+<p>这里，我们导入 threading 模块并且创建一个叫 doubler 的常规函数。这个函数接受一个值，然后把这个值翻一番。它还会打印出调用这个函数的线程的名称，并在最后打印一行空行。然后在代码的最后一块，我们创建五个线程并且依次启动它们。在我们实例化一个线程时，你会注意到，我们把 doubler 函数传给 target 参数，同时也给 doubler 函数传递了参数。Args 参数看起来有些奇怪，那是因为我们需要传递一个序列给 doubler 函数，但它只接受一个变量，所以我们把逗号放在尾部来创建只有一个参数的序列。</p>
+<p>需要注意的是，如果你想等待一个线程结束，那么需要调用 join() 方法。</p>
+<p>当你运行以上这段代码，会得到以下输出内容：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">Thread-1</span><br><span class="line"></span><br><span class="line">0</span><br><span class="line"></span><br><span class="line">Thread-2</span><br><span class="line"></span><br><span class="line">2</span><br><span class="line"></span><br><span class="line">Thread-3</span><br><span class="line"></span><br><span class="line">4</span><br><span class="line"></span><br><span class="line">Thread-4</span><br><span class="line"></span><br><span class="line">6</span><br><span class="line"></span><br><span class="line">Thread-5</span><br><span class="line"></span><br><span class="line">8</span><br></pre></td></tr></table></figure>
+<p>当然，通常情况下你不会希望输出打印到标准输出。如果不幸真的这么做了，那么最终的显示效果将会非常混乱。你应该使用 Python 的 logging 模块。它是线程安全的，并且表现出色。让我们用 logging 模块修改上面的例子并且给我们的线程命名。代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_logger</span><span class="params">()</span>:</span></span><br><span class="line">    logger = logging.getLogger(<span class="string">"threading_example"</span>)</span><br><span class="line">    logger.setLevel(logging.DEBUG)</span><br><span class="line"></span><br><span class="line">    fh = logging.FileHandler(<span class="string">"threading.log"</span>)</span><br><span class="line">    fmt = <span class="string">'%(asctime)s - %(threadName)s - %(levelname)s - %(message)s'</span></span><br><span class="line">    formatter = logging.Formatter(fmt)</span><br><span class="line">    fh.setFormatter(formatter)</span><br><span class="line"></span><br><span class="line">    logger.addHandler(fh)</span><br><span class="line">    <span class="keyword">return</span> logger</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">doubler</span><span class="params">(number, logger)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    可以被线程使用的一个函数</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    logger.debug(<span class="string">'doubler function executing'</span>)</span><br><span class="line">    result = number * <span class="number">2</span></span><br><span class="line">    logger.debug(<span class="string">'doubler function ended with: &#123;&#125;'</span>.format(</span><br><span class="line">        result))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    logger = get_logger()</span><br><span class="line">    thread_names = [<span class="string">'Mike'</span>, <span class="string">'George'</span>, <span class="string">'Wanda'</span>, <span class="string">'Dingbat'</span>, <span class="string">'Nina'</span>]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">        my_thread = threading.Thread(</span><br><span class="line">            target=doubler, name=thread_names[i], args=(i,logger))</span><br><span class="line">        my_thread.start()</span><br></pre></td></tr></table></figure>
+<p>代码中最大的改变就是加入了 get_logger 函数。这段代码将创建一个被设置为调试级别的日志记录器。它将日志保存在当前目录（即脚本运行所在的目录）下，然后设置每行日志的格式。格式包括时间戳、线程名、日志记录级别以及日志信息。</p>
+<p>在 doubler 函数中，我们把 print 语句换成 logging 语句。你会注发现，在创建线程时，我们给 doubler 函数传入了 logger 对象。这样做的原因是，如果在每个线程中实例化 logging 对象，那么将会产生多个 logging 单例（singleton），并且日志中将会有很多重复的内容。</p>
+<p>最后，创建一个名称列表，然后使用 name 关键字参数为每一个线程设置具体名称，这样就可以为线程命名。运行以上代码，将会得到包含以下内容的日志文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">2016-07-24 20:39:50,055 - Mike - DEBUG - doubler function executing</span><br><span class="line">2016-07-24 20:39:50,055 - Mike - DEBUG - doubler function ended with: 0</span><br><span class="line">2016-07-24 20:39:50,055 - George - DEBUG - doubler function executing</span><br><span class="line">2016-07-24 20:39:50,056 - George - DEBUG - doubler function ended with: 2</span><br><span class="line">2016-07-24 20:39:50,056 - Wanda - DEBUG - doubler function executing</span><br><span class="line">2016-07-24 20:39:50,056 - Wanda - DEBUG - doubler function ended with: 4</span><br><span class="line">2016-07-24 20:39:50,056 - Dingbat - DEBUG - doubler function executing</span><br><span class="line">2016-07-24 20:39:50,057 - Dingbat - DEBUG - doubler function ended with: 6</span><br><span class="line">2016-07-24 20:39:50,057 - Nina - DEBUG - doubler function executing</span><br><span class="line">2016-07-24 20:39:50,057 - Nina - DEBUG - doubler function ended with: 8</span><br></pre></td></tr></table></figure>
+<p>输出结果不言自明，所以继续介绍其他内容。在本节中再多说一点，即通过继承 threading.Thread 实现多线程。举最后一个例子，通过继承 threading.Thread 创建子类，而不是直接调用 Thread 函数。</p>
+<p>更新后的代码如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyThread</span><span class="params">(threading.Thread)</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, number, logger)</span>:</span></span><br><span class="line">        threading.Thread.__init__(self)</span><br><span class="line">        self.number = number</span><br><span class="line">        self.logger = logger</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        运行线程</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        logger.debug(<span class="string">'Calling doubler'</span>)</span><br><span class="line">        doubler(self.number, self.logger)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_logger</span><span class="params">()</span>:</span></span><br><span class="line">    logger = logging.getLogger(<span class="string">"threading_example"</span>)</span><br><span class="line">    logger.setLevel(logging.DEBUG)</span><br><span class="line"></span><br><span class="line">    fh = logging.FileHandler(<span class="string">"threading_class.log"</span>)</span><br><span class="line">    fmt = <span class="string">'%(asctime)s - %(threadName)s - %(levelname)s - %(message)s'</span></span><br><span class="line">    formatter = logging.Formatter(fmt)</span><br><span class="line">    fh.setFormatter(formatter)</span><br><span class="line"></span><br><span class="line">    logger.addHandler(fh)</span><br><span class="line">    <span class="keyword">return</span> logger</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">doubler</span><span class="params">(number, logger)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    可以被线程使用的一个函数</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    logger.debug(<span class="string">'doubler function executing'</span>)</span><br><span class="line">    result = number * <span class="number">2</span></span><br><span class="line">    logger.debug(<span class="string">'doubler function ended with: &#123;&#125;'</span>.format(</span><br><span class="line">        result))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    logger = get_logger()</span><br><span class="line">    thread_names = [<span class="string">'Mike'</span>, <span class="string">'George'</span>, <span class="string">'Wanda'</span>, <span class="string">'Dingbat'</span>, <span class="string">'Nina'</span>]</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">5</span>):</span><br><span class="line">        thread = MyThread(i, logger)</span><br><span class="line">        thread.setName(thread_names[i])</span><br><span class="line">        thread.start()</span><br></pre></td></tr></table></figure>
+<p>这个例子中，我们只是创建一个继承于 threading.Thread 的子类。像之前一样，传入一个需要翻一番的数字，以及 logging 对象。但是这次，设置线程名称的方式有点不太一样，变成了通过调用 thread 对象的 setName 方法来设置。不过仍然需要调用 start 来启动线程，不过你可能注意到我们并不需要在子类中定义该方法。当调用 start 时，它会通过调用 run 方法来启动线程。在我们的类中，我们调用 doubler 函数来做处理。输出结果中除了一些添加的额外信息内容几乎差不多。运行下这个脚本，看看你会得到什么。</p>
+<h1 id="线程锁与线程同步"><a href="#线程锁与线程同步" class="headerlink" title="线程锁与线程同步"></a>线程锁与线程同步</h1><p>当你有多个线程，就需要考虑怎样避免线程冲突。我的意思是说，你可能遇到多个线程同时访问同一资源的情况。如果不考虑这些问题并且制定相应的解决方案，那么在开发产品过程中，你总会在最糟糕的时候遇到这些棘手的问题。</p>
+<p>解决办法就是使用线程锁。锁由 Python 的 threading 模块提供，并且它最多被一个线程所持有。当一个线程试图获取一个已经锁在资源上的锁时，该线程通常会暂停运行，直到这个锁被释放。来让我们看一个非常典型没有却应具备锁功能的例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line">total = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_total</span><span class="params">(amount)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Updates the total by the given amount</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">global</span> total</span><br><span class="line">    total += amount</span><br><span class="line">    <span class="keyword">print</span> (total)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        my_thread = threading.Thread(</span><br><span class="line">            target=update_total, args=(<span class="number">5</span>,))</span><br><span class="line">        my_thread.start()</span><br></pre></td></tr></table></figure>
+<p>如果往以上代码添加 time.sleep 函数并给出不同长度的时间，可能会让这个例子更有意思。无论如何，这里的问题是，一个线程可能已经调用 update_total 函数并且还没有更新完成，此时另一个线程也有可能调用它并且尝试更新内容。根据操作执行顺序的不同，该值可能只被增加一次。</p>
+<p>让我们给这个函数添加锁。有两种方法可以实现。第一种方式是使用 try/finally ，从而确保锁肯定会被释放。下面是示例：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line">total = <span class="number">0</span></span><br><span class="line">lock = threading.Lock()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_total</span><span class="params">(amount)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Updates the total by the given amount</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">global</span> total</span><br><span class="line">    lock.acquire()</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        total += amount</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        lock.release()</span><br><span class="line">    <span class="keyword">print</span> (total)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        my_thread = threading.Thread(</span><br><span class="line">            target=update_total, args=(<span class="number">5</span>,))</span><br><span class="line">        my_thread.start()</span><br></pre></td></tr></table></figure>
+<p>如上，在我们做任何处理之前就获取锁。然后尝试更新 total 的值，最后释放锁并打印出 total 的当前值。事实上，我们可以使用 Python 的 with 语句避免使用 try/finally 这种较为繁琐的语句：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line">total = <span class="number">0</span></span><br><span class="line">lock = threading.Lock()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">update_total</span><span class="params">(amount)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    Updates the total by the given amount</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">global</span> total</span><br><span class="line">    <span class="keyword">with</span> lock:</span><br><span class="line">        total += amount</span><br><span class="line">    <span class="keyword">print</span> (total)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        my_thread = threading.Thread(</span><br><span class="line">            target=update_total, args=(<span class="number">5</span>,))</span><br><span class="line">        my_thread.start()</span><br></pre></td></tr></table></figure>
+<p>正如你看到的那样，我们不再需要 try/finally 作为上下文管理器，而是由 with 语句作为替代。</p>
+<p>当然你也会遇到要在代码中通过多个线程访问多个函数的情况。当你第一次编写并发代码时，代码可能是这样的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line">total = <span class="number">0</span></span><br><span class="line">lock = threading.Lock()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">do_something</span><span class="params">()</span>:</span></span><br><span class="line">    lock.acquire()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        print(<span class="string">'Lock acquired in the do_something function'</span>)</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        lock.release()</span><br><span class="line">        print(<span class="string">'Lock released in the do_something function'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Done doing something"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">do_something_else</span><span class="params">()</span>:</span></span><br><span class="line">    lock.acquire()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        print(<span class="string">'Lock acquired in the do_something_else function'</span>)</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        lock.release()</span><br><span class="line">        print(<span class="string">'Lock released in the do_something_else function'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Finished something else"</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    result_one = do_something()</span><br><span class="line">    result_two = do_something_else()</span><br></pre></td></tr></table></figure>
+<p>这样的代码在上面的情况下能够正常工作，但假设你有多个线程都调用这两个函数呢。当一个线程正在运行这两个函数，然后另外一个线程也可能会修改这些数据，最后得到的就是不正确的结果。问题是，你甚至可能没有马上意识到结果错了。有什么解决办法呢？让我们试着找出答案。</p>
+<p>通常首先想到的就是在调用这两个函数的地方上锁。让我们试着修改上面的例子，修改成如下所示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line">total = <span class="number">0</span></span><br><span class="line">lock = threading.RLock()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">do_something</span><span class="params">()</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">with</span> lock:</span><br><span class="line">        print(<span class="string">'Lock acquired in the do_something function'</span>)</span><br><span class="line">    print(<span class="string">'Lock released in the do_something function'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Done doing something"</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">do_something_else</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">with</span> lock:</span><br><span class="line">        print(<span class="string">'Lock acquired in the do_something_else function'</span>)</span><br><span class="line">    print(<span class="string">'Lock released in the do_something_else function'</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="string">"Finished something else"</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">main</span><span class="params">()</span>:</span></span><br><span class="line">    <span class="keyword">with</span> lock:</span><br><span class="line">        result_one = do_something()</span><br><span class="line">        result_two = do_something_else()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">print</span> (result_one)</span><br><span class="line">    <span class="keyword">print</span> (result_two)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    main()</span><br></pre></td></tr></table></figure>
+<p>当你真正运行这段代码时，你会发现它只是挂起了。究其原因，是因为我们只告诉 threading 模块获取锁。所以当我们调用第一个函数时，它发现锁已经被获取，随后便把自己挂起了，直到锁被释放，然而这将永远不会发生。</p>
+<p>真正的解决办法是使用重入锁（Re-Entrant Lock）。threading 模块提供的解决办法是使用 RLock 函数。即把 lock = threading.lock() 替换为 lock = threading.RLock()，然后重新运行代码，现在代码就可以正常运行了。</p>
+<p>如果你想在线程中运行以上代码，那么你可以用以下代码取代直接调用 main 函数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>):</span><br><span class="line">        my_thread = threading.Thread(</span><br><span class="line">            target=main)</span><br><span class="line">        my_thread.start()</span><br></pre></td></tr></table></figure>
+<p>每个线程都会运行 main 函数，main 函数则会依次调用另外两个函数。最终也会产生 10 组结果集。</p>
+<h1 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h1><p>Threading 模块有一个优雅的 Timer 类，你可以用它来实现在指定时间后要发生的动作。它们实际上会启动自己的自定义线程，通过调用常规线程上的 start() 方法即可运行。你也可以调用它的 cancel 方法停止定时器。值得注意的是，你甚至可以在开始定时器之前取消它。</p>
+<p>有一天，我遇到一个特殊的情况：我需要与已经启动的子进程通信，但是我需要它有超时处理。虽然处理这种特殊问题有很多不同的方法，不过我最喜欢的解决方案是使用 threading 模块的 Timer 类。</p>
+<p>在下面这个例子中，我们将使用 ping 指令作为演示。在 Linux 系统中，ping 命令会一直运行下去直到你手动杀死它。所以在 Linux 世界里，Timer 类就显得非常方便。示例如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> threading <span class="keyword">import</span> Timer</span><br><span class="line"></span><br><span class="line">kill = <span class="keyword">lambda</span> process: process.kill()</span><br><span class="line">cmd = [<span class="string">'ping'</span>, <span class="string">'www.google.com'</span>]</span><br><span class="line">ping = subprocess.Popen(</span><br><span class="line">    cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)</span><br><span class="line"></span><br><span class="line">my_timer = Timer(<span class="number">5</span>, kill, [ping])</span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    my_timer.start()</span><br><span class="line">    stdout, stderr = ping.communicate()</span><br><span class="line"><span class="keyword">finally</span>:</span><br><span class="line">    my_timer.cancel()</span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> (str(stdout))</span><br></pre></td></tr></table></figure>
+<p>这里我们在 lambda 表达式中调用 kill 杀死进程。接下来启动 ping 命令，然后创建 Timer 对象。你会注意到，第一个参数就是需要等待的秒数，第二个参数是需要调用的函数，紧跟其后的参数是要调用函数的入参。在本例中，我们的函数是一个 lambda 表达式，传入的是一个只有一个元素的列表。如果你运行这段代码，它应该会运行 5 秒钟，然后打印出 ping 的结果</p>
+<h1 id="其他线程组件"><a href="#其他线程组件" class="headerlink" title="其他线程组件"></a>其他线程组件</h1><p>Threading 模块包含对其他功能的支持。例如，你可以创建信号量（Semaphore），这是计算机科学中最古老的同步原语之一。基本上，一个信号量管理一个内置的计数器。当你调用 acquire 时计数器就会递减，相反当你调用 release 时就会递增。根据其设计，计数器的值无法小于零，所以如果正好在计数器为零时调用 acquire 方法，该方法将阻塞线程。</p>
+<p>另一个非常有用的同步工具就是事件（Event）。它允许你使用信号（signal）实现线程通信。在下一节中我们将举一个使用事件的实例。</p>
+<p>最后，在 Python 3.2 中加入了 Barrier 对象。Barrier 是管理线程池中的同步原语，在线程池中多条线程需要相互等待对方。如果要传递 barrier，每一条线程都要调用 wait() 方法，在其他线程调用该方法之前线程将会阻塞。全部调用之后将会同时释放所有线程。</p>
+<h1 id="线程通信"><a href="#线程通信" class="headerlink" title="线程通信"></a>线程通信</h1><p>某些情况下，你会希望线程之间互相通信。就像先前提到的，你可以通过创建 Event 对象达到这个目的。但更常用的方法是使用队列（Queue）。在我们的例子中，这两种方式都会有所涉及。下面让我们看看到底是什么样子的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> queue <span class="keyword">import</span> Queue</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">creator</span><span class="params">(data, q)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    生成用于消费的数据，等待消费者完成处理</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    print(<span class="string">'Creating data and putting it on the queue'</span>)</span><br><span class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> data:</span><br><span class="line">        evt = threading.Event()</span><br><span class="line">        q.put((item, evt))</span><br><span class="line"></span><br><span class="line">        print(<span class="string">'Waiting for data to be doubled'</span>)</span><br><span class="line">        evt.wait()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">my_consumer</span><span class="params">(q)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    消费部分数据，并做处理</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    这里所做的只是将输入翻一倍</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        data, evt = q.get()</span><br><span class="line">        print(<span class="string">'data found to be processed: &#123;&#125;'</span>.format(data))</span><br><span class="line">        processed = data * <span class="number">2</span></span><br><span class="line">        print(processed)</span><br><span class="line">        evt.set()</span><br><span class="line">        q.task_done()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    q = Queue()</span><br><span class="line">    data = [<span class="number">5</span>, <span class="number">10</span>, <span class="number">13</span>, <span class="number">-1</span>]</span><br><span class="line">    thread_one = threading.Thread(target=creator, args=(data, q))</span><br><span class="line">    thread_two = threading.Thread(target=my_consumer, args=(q,))</span><br><span class="line">    thread_one.start()</span><br><span class="line">    thread_two.start()</span><br><span class="line"></span><br><span class="line">    q.join()</span><br></pre></td></tr></table></figure>
+<p>让我们掰开揉碎分析一下。首先，我们有一个创建者（creator）函数（亦称作生产者（producer）），我们用它来创建想要操作（或者消费）的数据。然后用另外一个函数 my_consumer 来处理刚才创建出来的数据。Creator 函数使用 Queue 的 put 方法向队列中插入数据，消费者将会持续不断的检测有没有更多的数据，当发现有数据时就会处理数据。Queue 对象处理所有的获取锁和释放锁的过程，这些不用我们太关心。</p>
+<p>在这个例子中，先创建一个列表，然后创建两个线程，一个用作生产者，一个作为消费者。你会发现，我们给两个线程都传递了 Queue 对象，这两个线程隐藏了关于锁处理的细节。队列实现了数据从第一个线程到第二个线程的传递。当第一个线程把数据放入队列时，同时也传递一个 Event 事件，紧接着挂起自己，等待该事件结束。在消费者侧，也就是第二个线程，则做数据处理工作。当完成数据处理后就会调用 Event 事件的 set 方法，通知第一个线程已经把数据处理完毕了，可以继续生产了。</p>
+<p>最后一行代码调用了 Queue 对象的 join 方法，它会告知 Queue 等待所有线程结束。当第一个线程把所有数据都放到队列中，它也就运行结束了。</p>
+<hr>
+<p><a href="http://www.blog.pythonlibrary.org/2016/07/28/python-201-a-tutorial-on-threads/" target="_blank" rel="noopener">点此查看原文链接</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/learning-python-in-7-days/2019/05/21/day-6/" rel="next" title="7天掌握Python编程（程序员篇）第6天 - 网络编程">
+                <i class="fa fa-chevron-left"></i> 7天掌握Python编程（程序员篇）第6天 - 网络编程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image" src="/learning-python-in-7-days/images/avatar.gif" alt="nasacj">
+          <p class="site-author-name" itemprop="name">nasacj</p>
+           
+              <p class="site-description motion-element" itemprop="description">写给程序员的Python入门和学习资料</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/learning-python-in-7-days/archives/">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/nasacj" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                    
+                      GitHub
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#线程简介"><span class="nav-number">1.</span> <span class="nav-text">线程简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程锁与线程同步"><span class="nav-number">2.</span> <span class="nav-text">线程锁与线程同步</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#定时器"><span class="nav-number">3.</span> <span class="nav-text">定时器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#其他线程组件"><span class="nav-number">4.</span> <span class="nav-text">其他线程组件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#线程通信"><span class="nav-number">5.</span> <span class="nav-text">线程通信</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">nasacj</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/learning-python-in-7-days/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/learning-python-in-7-days/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/learning-python-in-7-days/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/learning-python-in-7-days/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/learning-python-in-7-days/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/learning-python-in-7-days/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/learning-python-in-7-days/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/learning-python-in-7-days/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/learning-python-in-7-days/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/learning-python-in-7-days/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/learning-python-in-7-days/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
